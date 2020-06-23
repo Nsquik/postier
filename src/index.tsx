@@ -5,16 +5,14 @@ import App from "./App";
 import * as serviceWorker from "./serviceWorker";
 import configure from "./store/configureStore";
 import { Provider } from "react-redux";
+import "./index.scss";
 
 const store = configure();
-console.log(store);
 
 ReactDOM.render(
-  <React.StrictMode>
-    <Provider store={store}>
-      <App />
-    </Provider>
-  </React.StrictMode>,
+  <Provider store={store}>
+    <App />
+  </Provider>,
   document.getElementById("root")
 );
 

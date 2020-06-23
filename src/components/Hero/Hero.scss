@@ -1,0 +1,49 @@
+@import "../../variables.scss";
+@import url("https://fonts.googleapis.com/css2?family=Raleway:wght@300;800&display=swap");
+
+.hero {
+  height: 100vh;
+  background-color: $main-color;
+  padding: 1rem;
+
+  &__title {
+    font-family: "Raleway", sans-serif;
+    font-weight: 700;
+    font-size: 6rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
+    padding: 2rem;
+  }
+  &__subtitle {
+    font-weight: 300;
+    font-size: 1rem;
+    letter-spacing: 1.25rem;
+  }
+}
+
+.hero__content {
+  position: relative;
+  z-index: 1000;
+  background-color: $main-offwhite;
+  height: 100%;
+  box-shadow: $box-shadow;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  align-content: center;
+}
+
+.wave {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.hero__select {
+  // transform: translateY(-5rem);
+  padding: 2rem;
+}

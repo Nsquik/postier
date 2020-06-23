@@ -12,13 +12,17 @@ const initialState: UserState = {
 export const usersReducer = (state = initialState, action: UserActionTypes): UserState => {
   switch (action.type) {
     case UsersTypes.FETCH_USERS:
-      console.log(action.payload);
-
-      return state;
+      return {
+        ...state,
+        users: [...state.users, ...action.payload.users],
+        isFetching: false,
+        lastMeta: action.payload._meta,
+        error: null,
+      };
     case UsersTypes.FETCH_USERS_FAILURE:
-      return state;
+      return { ...state, error: action.payload, isFetching: false };
     case UsersTypes.FETCH_USERS_REQUEST:
-      return state;
+      return { ...state, isFetching: true };
     default:
       return state;
   }
