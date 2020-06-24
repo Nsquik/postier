@@ -37,8 +37,6 @@ const SelectContainer: React.FC<Props> = () => {
     console.log(option);
   };
 
-  console.log(inputValue);
-
   return (
     <>
       <Select
