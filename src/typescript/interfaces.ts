@@ -9,6 +9,7 @@ export interface User {
   website?: string;
   address?: string;
   status?: string;
+  _links?: { avatar: { href: string }; edit: { href: string }; self: { href: string } };
 }
 
 export interface Meta {

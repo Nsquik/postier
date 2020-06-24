@@ -1,4 +1,5 @@
 @import "../../variables.scss";
+@import url("https://fonts.googleapis.com/css2?family=Open+Sans:wght@300&display=swap");
 .select {
   &__container {
     height: 30rem;
@@ -12,10 +13,6 @@
 
 .select__dropdown {
   height: 20rem;
-}
-
-.select__option {
-  background-color: chartreuse;
 }
 
 .selectContainer {
@@ -39,6 +36,73 @@
     top: 0;
     left: 0;
   }
+}
+
+.select__option {
+  // height: 100%;
+  font-family: "Open Sans", sans-serif;
+  display: flex;
+  flex-direction: row-reverse;
+  justify-content: space-between;
+  align-content: center;
+  align-items: center;
+  &-img {
+    width: 4rem;
+    height: 4rem;
+  }
+  &-info {
+    // height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-end;
+    align-content: flex-end;
+  }
+  &-name {
+    font-size: 1.5rem;
+    font-family: "Open Sans", sans-serif;
+    font-weight: 300;
+  }
+
+  &-email {
+    font-size: 1rem;
+    font-family: "Open Sans", sans-serif;
+    font-weight: 300;
+  }
+}
+
+.ant-select-selection-item .select__option {
+  flex-direction: row;
+  height: 100%;
+  justify-content: space-between;
+}
+
+.ant-select-selection-item .select__option .select__option-info {
+  transform: scale(1);
+}
+
+.ant-select-selection-item .select__option .select__option-info .select__option-name {
+  margin-top: 3.7rem;
+}
+.ant-select-selection-item .select__option .select__option-info .select__option-name {
+}
+
+.ant-select-selection-item .select__option img {
+  width: 3rem;
+  height: 3rem;
+}
+
+.tescik {
+  pointer-events: none;
+  background: $main-color !important;
+}
+
+.tescik:hover {
+  background: $main-color !important;
+}
+
+.ant-select-item-option-active:not(.ant-select-item-option-disabled) {
+  background-color: $main-color;
 }
 
 input[type="text"] {
@@ -101,4 +165,12 @@ input[type="text"] {
 .ant-select-item-option-disabled {
   background: $sub-color !important;
   color: white !important;
+}
+
+.ant-select-focused.ant-select-single:not(.ant-select-customize-input) .ant-select-selector {
+  border-color: #40a9ff;
+  border-right-width: 1px !important;
+  outline: 0;
+  -webkit-box-shadow: 0 0 0 2px rgba(0, 203, 169, 0.2) !important;
+  box-shadow: 0 0 0 2px rgba(0, 203, 169, 0.4) !important;
 }

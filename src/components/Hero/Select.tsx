@@ -1,10 +1,12 @@
 import React, { useState, InputHTMLAttributes } from "react";
-import "./Select.scss";
 import Item from "./Item";
 import Input from "./Input";
 import "antd/dist/antd.css";
+import "./Select.scss";
 import { Select } from "antd";
 import useOnScrollFetch from "../../hooks/useOnScrollFetch";
+import { useTypedSelector } from "../../store/IStore";
+import imgPlaceholder from "../../media/placeholder.jpg";
 
 const { Option } = Select;
 
@@ -14,18 +16,14 @@ interface StaticComponents {
 }
 
 const SelectContainer: React.FC<Props> & StaticComponents = ({}) => {
-  const [input, setInput] = useState<any>("");
+  const [input, setInput] = useState<string>();
   const { values, onScroll } = useOnScrollFetch();
-  console.log(values);
+  const { users } = useTypedSelector((state) => state.users);
+  const data = users;
 
-  const handleScroll = (e: React.UIEvent<HTMLDivElement, UIEvent>) => {
-    const clientHeightAndScrollTop = e.currentTarget.scrollTop + e.currentTarget.clientHeight;
-
-    //if clientHeightAndScrollTop === e.target.scrollHeight then end of scroll was reached.
-
-    if (clientHeightAndScrollTop === e.currentTarget.scrollHeight) {
-      console.log("END");
-    }
+  const onChange = (value: any, option: any) => {
+    console.log(value);
+    console.log(option);
   };
 
   return (
@@ -34,61 +32,37 @@ const SelectContainer: React.FC<Props> & StaticComponents = ({}) => {
         autoFocus
         autoClearSearchValue
         showSearch
-        labelInValue
         placeholder="Select users"
-        filterOption={false}
         style={{ width: "100%" }}
         allowClear
+        // value={input}
         size={"large"}
+        onChange={onChange}
+        optionFilterProp={""}
         onPopupScroll={(e) => {
-          console.log(e.currentTarget.scrollTop);
-
           onScroll(e.currentTarget.scrollTop, e.currentTarget.clientHeight, e.currentTarget.scrollHeight);
         }}
       >
-        <Option value="ja" disabled={true}>
-          ELUWINA
-        </Option>
-        <Option value="hej">
-          <div>
-            elo<div>siema</div>
-          </div>
-        </Option>
-        <Option value="7">
-          <div>
-            elo<div>siema</div>
-          </div>
-        </Option>
-        <Option value="6">
-          <div>
-            elo<div>siema</div>
-          </div>
-        </Option>
-        <Option value="5">
-          <div>
-            elo<div>siema</div>
-          </div>
-        </Option>
-        <Option value="4">
-          <div>
-            elo<div>siema</div>
-          </div>
-        </Option>
-        <Option value="3">
-          <div>
-            elo<div>siema</div>
-          </div>
-        </Option>
-        <Option value="2">
-          <div>
-            elo<div>siema</div>
-          </div>
-        </Option>
-        <Option value="1">
-          <div>
-            elo<div>siema</div>
-          </div>
-        </Option>
+        <div className="tescik" aria-disabled={true}>
+          Me
+        </div>
+        {data.map((user) => (
+          <Option value={user.last_name} key={user.id}>
+            <div className="select__option" key={user.id}>
+              <div className="select__option-info">
+                <div className="select__option-name">{`${user.first_name} ${user.last_name}`}</div>
+                <div className="select__option-email">{user.email}</div>
+              </div>
+              <img
+                className="select__option-img"
+                src={user?._links?.avatar?.href ? user._links.avatar.href : imgPlaceholder}
+                onError={(e) => (e.currentTarget.src = imgPlaceholder)}
+
+                // onLoad={(e) => (e.currentTarget.src = imgPlaceholder)}
+              ></img>
+            </div>
+          </Option>
+        ))}
       </Select>
     </>
   );
