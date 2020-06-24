@@ -11,7 +11,12 @@ interface StaticComponents {
   Select: React.FC<any>;
 }
 
-const Hero: React.FC<Props> & StaticComponents = ({ children }) => {
+interface ComponentWithStaticMethod<TProps> extends React.FC<TProps> {
+  staticMethod?: (value: string) => void;
+  Select: React.FC<any>;
+}
+
+const Hero: ComponentWithStaticMethod<Props> = ({ children }) => {
   return (
     <header className="hero">
       <section className="hero__content">

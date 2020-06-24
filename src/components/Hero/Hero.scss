@@ -3,10 +3,11 @@
 
 .hero {
   height: 100vh;
-  background-color: $main-color;
+  background: linear-gradient(191deg, rgba(0, 203, 169, 1) 0%, rgba(182, 194, 192, 1) 100%);
   padding: 1rem;
 
   &__title {
+    color: black;
     font-family: "Raleway", sans-serif;
     font-weight: 700;
     font-size: 6rem;
@@ -16,10 +17,11 @@
     align-items: center;
     align-content: center;
     padding: 2rem;
+    line-height: 1.25;
   }
   &__subtitle {
     font-weight: 300;
-    font-size: 1rem;
+    font-size: 2rem;
     letter-spacing: 1.25rem;
   }
 }
@@ -46,4 +48,9 @@
 .hero__select {
   // transform: translateY(-5rem);
   padding: 2rem;
+  width: 30rem;
+}
+
+::selection {
+  background-color: $main-color;
 }

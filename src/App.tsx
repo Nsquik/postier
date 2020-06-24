@@ -1,10 +1,9 @@
-import React, { useRef } from "react";
+import React, { useRef, useEffect, Suspense } from "react";
 import { useDispatch } from "react-redux";
 import { fetchUsers } from "./actions/usersActions";
 import { useTypedSelector } from "./store/IStore";
-import InfiniteScroll from "react-infinite-scroll-component";
+import "./index.scss";
 import Hero from "./components/Hero/Hero";
-
 export interface Props {}
 
 const App: React.FC<Props> = ({}) => {
@@ -13,16 +12,13 @@ const App: React.FC<Props> = ({}) => {
   const ref = useRef<HTMLDivElement | null>(null);
   console.log(state);
 
-  const btnClick = (): any => {
+  useEffect(() => {
     dispatch(fetchUsers());
-  };
+  }, []);
 
   return (
     <div>
-      {/* <button onClick={btnClick}>PLUS</button> */}
-      <Hero>
-        <Hero.Select />
-      </Hero>
+      <Hero>{state.users.length > 0 ? <Hero.Select /> : "loading..."}</Hero>
     </div>
   );
 };

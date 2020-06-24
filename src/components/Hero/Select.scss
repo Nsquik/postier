@@ -1,7 +1,4 @@
-.hero__select {
-  width: 30rem;
-}
-
+@import "../../variables.scss";
 .select {
   &__container {
     height: 30rem;
@@ -11,4 +8,97 @@
     flex-direction: column;
     overflow-y: auto;
   }
+}
+
+.select__dropdown {
+  height: 20rem;
+}
+
+.select__option {
+  background-color: chartreuse;
+}
+
+.selectContainer {
+}
+
+.select {
+  &__input {
+    width: 100%;
+    padding: 1rem;
+    &:focus,
+    &:active {
+      border: red 2px solid;
+      outline: none;
+    }
+  }
+
+  &__label {
+    position: absolute;
+    color: $main-color;
+    transition: all 0.2s cubic-bezier(0.55, 0.055, 0.675, 0.19);
+    top: 0;
+    left: 0;
+  }
+}
+
+input[type="text"] {
+  border: none;
+}
+
+.ant-select-selector:hover {
+  border: 1px solid red;
+}
+
+.ant-select-focused {
+  outline: none;
+  box-shadow: none;
+}
+
+.ant-select-selector {
+  border: none;
+  box-shadow: none;
+  outline: none;
+}
+
+.ant-select-focused.ant-select-multiple .ant-select-selector {
+  box-shadow: 0 0 0 2px rgba(0, 203, 169, 0.2) !important;
+}
+
+.ant-select-multiple {
+  box-shadow: none;
+}
+
+.ant-select:not(.ant-select-disabled):hover .ant-select-selector {
+  border: 1px $main-color solid !important;
+}
+
+.ant-select-selector:not(:hover) .ant-select:focus {
+  border: 1px $main-color solid !important;
+}
+
+.ant-select-multiple .ant-select-selector:hover {
+  border: 1px $main-color solid !important;
+}
+
+.ant-select-selector:not(:hover) {
+  border: 1px $main-color solid !important;
+}
+
+::selection {
+  background-color: $main-color;
+}
+
+.ant-select-selection-search-input::selection {
+  background-color: $main-color;
+}
+
+.ant-select-selection-search-input:active .ant-select-selector:not(:hover) {
+  border: 1px red solid !important;
+}
+
+// ant-select ant-select-multiple ant-select-show-search and-select-open ant-select-focused -ant-select-show-search
+
+.ant-select-item-option-disabled {
+  background: $sub-color !important;
+  color: white !important;
 }
