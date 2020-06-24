@@ -1,30 +1,43 @@
-import React, { useState, InputHTMLAttributes } from "react";
-import Item from "./Item";
-import Input from "./Input";
+import React, { useState, useEffect } from "react";
 import "antd/dist/antd.css";
 import "./Select.scss";
 import { Select } from "antd";
 import useOnScrollFetch from "../../hooks/useOnScrollFetch";
 import { useTypedSelector } from "../../store/IStore";
 import imgPlaceholder from "../../media/placeholder.jpg";
+import useOnSearchFetch from "../../hooks/useOnSearchFetch";
+import { User } from "../../typescript/interfaces";
+import { SearchSkeleton } from "../misc/SearchSkeleton";
 
 const { Option } = Select;
 
 export interface Props {}
-interface StaticComponents {
-  Item: React.FC<any>;
-}
+// interface StaticComponents {
+//   Item: React.FC<any>;
+// }
 
-const SelectContainer: React.FC<Props> & StaticComponents = ({}) => {
-  const [input, setInput] = useState<string>();
-  const { values, onScroll } = useOnScrollFetch();
-  const { users } = useTypedSelector((state) => state.users);
-  const data = users;
+const SelectContainer: React.FC<Props> = () => {
+  const [data, setData] = useState<User[]>([]);
+  const { onScroll } = useOnScrollFetch();
+  const { debouncedOnSearchFetch, searchData, isSearchFetching, inputValue, reset } = useOnSearchFetch();
+  const { users, isFetching } = useTypedSelector((state) => state.users);
+
+  useEffect(() => {
+    if (inputValue === "") {
+      setData(users);
+    } else {
+      setData(searchData);
+    }
+  }, [inputValue, searchData, users]);
 
   const onChange = (value: any, option: any) => {
+    reset();
+
     console.log(value);
     console.log(option);
   };
+
+  console.log(inputValue);
 
   return (
     <>
@@ -32,22 +45,25 @@ const SelectContainer: React.FC<Props> & StaticComponents = ({}) => {
         autoFocus
         autoClearSearchValue
         showSearch
-        placeholder="Select users"
+        placeholder="Select user"
         style={{ width: "100%" }}
         allowClear
-        // value={input}
         size={"large"}
+        dropdownClassName={"select__dropdown"}
+        loading={isSearchFetching}
         onChange={onChange}
-        optionFilterProp={""}
+        onSearch={debouncedOnSearchFetch} // Fetch on user input useOnSearchFetch hook
+        notFoundContent={isSearchFetching ? <SearchSkeleton /> : `User with lastname ${inputValue} not found `}
+        filterOption={true}
+        optionFilterProp={"lastname"}
         onPopupScroll={(e) => {
-          onScroll(e.currentTarget.scrollTop, e.currentTarget.clientHeight, e.currentTarget.scrollHeight);
+          // Fetch on scroll useOnScrollFetch hook
+          inputValue === "" &&
+            onScroll(e.currentTarget.scrollTop, e.currentTarget.clientHeight, e.currentTarget.scrollHeight); // values to calculate if end of scroll
         }}
       >
-        <div className="tescik" aria-disabled={true}>
-          Me
-        </div>
         {data.map((user) => (
-          <Option value={user.last_name} key={user.id}>
+          <Option value={user.id} key={user.id} lastname={user.last_name}>
             <div className="select__option" key={user.id}>
               <div className="select__option-info">
                 <div className="select__option-name">{`${user.first_name} ${user.last_name}`}</div>
@@ -57,36 +73,15 @@ const SelectContainer: React.FC<Props> & StaticComponents = ({}) => {
                 className="select__option-img"
                 src={user?._links?.avatar?.href ? user._links.avatar.href : imgPlaceholder}
                 onError={(e) => (e.currentTarget.src = imgPlaceholder)}
-
-                // onLoad={(e) => (e.currentTarget.src = imgPlaceholder)}
+                alt="User profile"
               ></img>
             </div>
           </Option>
         ))}
+        <Select.OptGroup label={isFetching ? "...Loading" : null}></Select.OptGroup>
       </Select>
     </>
   );
 };
 
-SelectContainer.Item = Item;
-
 export default SelectContainer;
-
-{
-  /* <form action="">
-{input && (
-  <label htmlFor="query" className="select__label">
-    Select user:
-  </label>
-)}
-<input
-  autoComplete={"off"}
-  id="query"
-  placeholder="Select user"
-  type="text"
-  className="select__input"
-  value={input}
-  onChange={(e) => setInput(e.target.value)}
-></input>
-</form> */
-}

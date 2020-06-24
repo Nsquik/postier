@@ -12,7 +12,8 @@
 }
 
 .select__dropdown {
-  height: 20rem;
+  @media only screen and (max-width: 1200px) {
+  }
 }
 
 .selectContainer {
@@ -24,7 +25,6 @@
     padding: 1rem;
     &:focus,
     &:active {
-      border: red 2px solid;
       outline: none;
     }
   }
@@ -59,6 +59,10 @@
     align-content: flex-end;
   }
   &-name {
+    @media only screen and (max-width: 1200px) {
+      transform: translateY(0.8rem);
+      font-size: 1.6rem;
+    }
     font-size: 1.5rem;
     font-family: "Open Sans", sans-serif;
     font-weight: 300;
@@ -90,6 +94,7 @@
 .ant-select-selection-item .select__option img {
   width: 3rem;
   height: 3rem;
+  border: $sub-color;
 }
 
 .tescik {
@@ -97,20 +102,13 @@
   background: $main-color !important;
 }
 
-.tescik:hover {
-  background: $main-color !important;
-}
-
 .ant-select-item-option-active:not(.ant-select-item-option-disabled) {
   background-color: $main-color;
+  color: white;
 }
 
 input[type="text"] {
   border: none;
-}
-
-.ant-select-selector:hover {
-  border: 1px solid red;
 }
 
 .ant-select-focused {
@@ -154,10 +152,7 @@ input[type="text"] {
 
 .ant-select-selection-search-input::selection {
   background-color: $main-color;
-}
-
-.ant-select-selection-search-input:active .ant-select-selector:not(:hover) {
-  border: 1px red solid !important;
+  color: white;
 }
 
 // ant-select ant-select-multiple ant-select-show-search and-select-open ant-select-focused -ant-select-show-search

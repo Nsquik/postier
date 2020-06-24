@@ -7,7 +7,7 @@ const useEffectAfterMount = (cb: any, deps: any) => {
       return cb();
     }
     componentJustMounted.current = false;
-  }, deps);
+  }, [cb, deps]);
 };
 
 export default useEffectAfterMount;

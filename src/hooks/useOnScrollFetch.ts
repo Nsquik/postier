@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from "react";
+import { useState, useCallback } from "react";
 import { useTypedSelector } from "../store/IStore";
 import { useDispatch } from "react-redux";
 import { fetchUsers } from "../actions/usersActions";
@@ -16,14 +16,9 @@ const useOnScrollFetch = () => {
   const dispatch = useDispatch();
 
   useEffectAfterMount(() => {
-    console.log("siemka");
-    console.log(`xd ${values.clientHeight + values.scrollTop}`);
-    console.log(`xd2 ${values.scrollHeight}`);
     const clientHeightAndScrollTop = values?.clientHeight + values?.scrollTop;
 
     if (clientHeightAndScrollTop === values?.scrollHeight || values?.scrollHeight - clientHeightAndScrollTop < 1) {
-      console.log("DISPATCHING");
-
       dispatch(fetchUsers());
     }
   }, [values]);
