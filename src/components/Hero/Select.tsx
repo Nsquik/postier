@@ -8,6 +8,7 @@ import imgPlaceholder from "../../media/placeholder.jpg";
 import useOnSearchFetch from "../../hooks/useOnSearchFetch";
 import { User } from "../../typescript/interfaces";
 import { SearchSkeleton } from "../misc/SearchSkeleton";
+import Search from "antd/lib/input/Search";
 
 const { Option } = Select;
 
@@ -19,7 +20,7 @@ export interface Props {}
 const SelectContainer: React.FC<Props> = () => {
   const [data, setData] = useState<User[]>([]);
   const { onScroll } = useOnScrollFetch();
-  const { debouncedOnSearchFetch, searchData, isSearchFetching, inputValue, reset } = useOnSearchFetch();
+  const { debouncedOnSearchFetch, searchData, isSearchFetching, inputValue, reset, error } = useOnSearchFetch();
   const { users, isFetching } = useTypedSelector((state) => state.users);
 
   useEffect(() => {
@@ -36,22 +37,32 @@ const SelectContainer: React.FC<Props> = () => {
     console.log(value);
     console.log(option);
   };
+  console.log(error);
 
   return (
     <>
       <Select
         autoFocus
-        autoClearSearchValue
         showSearch
         placeholder="Select user"
         style={{ width: "100%" }}
         allowClear
         size={"large"}
         dropdownClassName={"select__dropdown"}
-        loading={isSearchFetching}
         onChange={onChange}
+        onSelect={onChange}
         onSearch={debouncedOnSearchFetch} // Fetch on user input useOnSearchFetch hook
-        notFoundContent={isSearchFetching ? <SearchSkeleton /> : `User with lastname ${inputValue} not found `}
+        notFoundContent={
+          isSearchFetching ? (
+            <SearchSkeleton />
+          ) : error ? (
+            "There was an error fetching users..."
+          ) : data.length === 0 ? (
+            "User not found..."
+          ) : (
+            <SearchSkeleton />
+          )
+        }
         filterOption={true}
         optionFilterProp={"lastname"}
         onPopupScroll={(e) => {
