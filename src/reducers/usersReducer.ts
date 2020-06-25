@@ -3,7 +3,7 @@ import { UserActionTypes, UsersTypes } from "../actions/usersActionTypes";
 
 const initialState: UserState = {
   users: [],
-  selectedUser: {},
+  selectedUser: null,
   error: null,
   isFetching: false,
   lastMeta: null,
@@ -23,6 +23,9 @@ export const usersReducer = (state = initialState, action: UserActionTypes): Use
       return { ...state, error: action.payload, isFetching: false };
     case UsersTypes.FETCH_USERS_REQUEST:
       return { ...state, isFetching: true };
+    case UsersTypes.SELECT_USER: {
+      return { ...state, selectedUser: action.payload };
+    }
     default:
       return state;
   }

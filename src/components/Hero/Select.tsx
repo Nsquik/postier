@@ -8,7 +8,9 @@ import imgPlaceholder from "../../media/placeholder.jpg";
 import useOnSearchFetch from "../../hooks/useOnSearchFetch";
 import { User } from "../../typescript/interfaces";
 import { SearchSkeleton } from "../misc/SearchSkeleton";
-import Search from "antd/lib/input/Search";
+import { useDispatch } from "react-redux";
+import { selectUser } from "../../actions/usersActions";
+import { LabeledValue } from "antd/lib/select";
 
 const { Option } = Select;
 
@@ -22,6 +24,7 @@ const SelectContainer: React.FC<Props> = () => {
   const { onScroll } = useOnScrollFetch();
   const { debouncedOnSearchFetch, searchData, isSearchFetching, inputValue, reset, error } = useOnSearchFetch();
   const { users, isFetching } = useTypedSelector((state) => state.users);
+  const dispatch = useDispatch();
 
   useEffect(() => {
     if (inputValue === "") {
@@ -31,13 +34,20 @@ const SelectContainer: React.FC<Props> = () => {
     }
   }, [inputValue, searchData, users]);
 
-  const onChange = (value: any, option: any) => {
+  const onChange = () => {
     reset();
-
-    console.log(value);
-    console.log(option);
+    console.log("XD");
   };
-  console.log(error);
+
+  const onSelect = (value: string | number | LabeledValue, option: any) => {
+    // console.log(value);
+    // console.log(option);
+    const res = data.find((user) => user.id === value);
+
+    res && dispatch(selectUser(res));
+
+    // dispatch(selectUser)
+  };
 
   return (
     <>
@@ -50,7 +60,7 @@ const SelectContainer: React.FC<Props> = () => {
         size={"large"}
         dropdownClassName={"select__dropdown"}
         onChange={onChange}
-        onSelect={onChange}
+        onSelect={onSelect}
         onSearch={debouncedOnSearchFetch} // Fetch on user input useOnSearchFetch hook
         notFoundContent={
           isSearchFetching ? (

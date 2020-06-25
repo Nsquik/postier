@@ -1,8 +1,7 @@
-import { useState, useCallback, useEffect } from "react";
+import { useState, useCallback, useRef } from "react";
 import { User } from "../typescript/interfaces";
 import debounce from "lodash/debounce";
 import apiClient from "../api/axios";
-import useEffectAfterMount from "./useEffectAfterMount";
 
 const useOnSearchFetch = () => {
   const [inputValue, setinputValue] = useState("");
@@ -10,10 +9,13 @@ const useOnSearchFetch = () => {
   const [isSearchFetching, setIsSearchFetching] = useState(false);
   const [error, setError] = useState(null);
 
+  const resetRef = useRef(0);
+
   const reset = useCallback(() => {
     setinputValue("");
     setValues([]);
-  }, []);
+    resetRef.current++;
+  }, [setValues, setinputValue]);
 
   const setInput = useCallback((value: string) => {
     setinputValue(value);
@@ -50,6 +52,7 @@ const useOnSearchFetch = () => {
     isSearchFetching,
     inputValue,
     reset,
+    resetDep: resetRef.current,
     setInput,
     error,
   };

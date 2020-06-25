@@ -11,7 +11,6 @@ export interface Props {}
 const App: React.FC<Props> = () => {
   const dispatch = useDispatch();
   const state = useTypedSelector((state) => state.users);
-  console.log(state);
 
   useEffect(() => {
     dispatch(fetchUsers());
