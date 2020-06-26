@@ -26,7 +26,7 @@ export interface Meta {
 export interface CommonData {
   lastMeta: Meta | null;
   isFetching: boolean;
-  error: Error | null;
+  error: Error | null | string;
 }
 
 export interface UserState extends CommonData {
@@ -47,4 +47,5 @@ export interface Post {
 
 export interface PostState extends CommonData {
   posts: Post[];
+  firstFetch: boolean;
 }

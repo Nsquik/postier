@@ -2,11 +2,12 @@ Po załadowaniu strony powinna zostać wyświetlona nazwa aplikacji (dowolna) or
 
 Select powinien obsługiwać prostą wyszukiwarkę w tym zasobie po nazwisku użytkownika
 
------------------------------- DONE ---------------------------------
 
 Po wybraniu konkretnego użytkownika wyświetlamy:
 
 1. Jego pierwszy post plus przycisk umożliwiający zobaczenia kolejnych.
+
+------------------------------ DONE ---------------------------------
 
 2. Każdy post powinien mieć możliwość zobaczenia jego komentarzy
 

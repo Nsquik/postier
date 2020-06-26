@@ -6,6 +6,7 @@ const initialState: PostState = {
   error: null,
   isFetching: false,
   lastMeta: null,
+  firstFetch: false,
 };
 
 export const postsReducer = (state = initialState, action: PostsActionTypes): PostState => {
@@ -13,12 +14,26 @@ export const postsReducer = (state = initialState, action: PostsActionTypes): Po
     case PostsTypes.FETCH_POSTS:
       return {
         ...state,
-        posts: { ...state.posts, ...action.payload.result },
+        posts: [...state.posts, ...action.payload.result],
         isFetching: false,
         lastMeta: action.payload._meta,
       };
+    case PostsTypes.FETCH_FIRST_POSTS:
+      return {
+        ...state,
+        posts: [...state.posts, ...action.payload.result],
+        lastMeta: action.payload._meta,
+        firstFetch: true,
+      };
+
     case PostsTypes.USER_SWITCHED:
-      return { ...state, lastMeta: action.payload, posts: [] };
+      return { ...state, lastMeta: action.payload, posts: [], firstFetch: false };
+    case PostsTypes.FETCH_POSTS_REQUEST:
+      return { ...state, isFetching: true };
+    case PostsTypes.FETCH_POSTS_ERROR:
+      console.log(action.payload);
+
+      return { ...state, error: action.payload, isFetching: false };
 
     default:
       return state;

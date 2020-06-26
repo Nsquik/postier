@@ -37,7 +37,6 @@ const SelectContainer: React.FC<Props> = () => {
 
   const onChange = () => {
     reset();
-    console.log("XD");
   };
 
   const onSelect = (value: string | number | LabeledValue, option: any) => {
