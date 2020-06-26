@@ -1,6 +1,5 @@
 import React, { Suspense } from "react";
 import ReactDOM from "react-dom";
-import "./index.scss";
 import * as serviceWorker from "./serviceWorker";
 import configure from "./store/configureStore";
 import { Provider } from "react-redux";

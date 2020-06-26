@@ -27,3 +27,10 @@ export const fetchPosts = (): AppThunk => async (dispatch, getState) => {
     dispatch<FETCH_POSTS_ERROR>({ type: PostsTypes.FETCH_POSTS_ERROR, payload: error });
   }
 };
+
+export const userSwitched = () => {
+  return {
+    type: PostsTypes.USER_SWITCHED,
+    payload: null,
+  };
+};

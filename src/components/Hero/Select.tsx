@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import "antd/dist/antd.css";
 import "./Select.scss";
 import { Select } from "antd";
 import useOnScrollFetch from "../../hooks/useOnScrollFetch";
@@ -11,6 +10,8 @@ import { SearchSkeleton } from "../misc/SearchSkeleton";
 import { useDispatch } from "react-redux";
 import { selectUser } from "../../actions/usersActions";
 import { LabeledValue } from "antd/lib/select";
+
+import "antd/lib/select/style/css";
 
 const { Option } = Select;
 

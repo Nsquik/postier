@@ -98,7 +98,7 @@
 }
 
 .ant-select-item-option-active:not(.ant-select-item-option-disabled) {
-  background-color: $main-color;
+  background-color: $main-color !important;
   color: white;
 }
 
