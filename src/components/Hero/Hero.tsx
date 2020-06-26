@@ -25,7 +25,7 @@ const Hero: ComponentWithStaticMethod<Props> = ({ children }) => {
           posTier
           <div className="hero__subtitle">post and comment</div>
         </div>
-        <hr style={{ width: "50%" }}></hr>
+        {/* <hr style={{ width: "50%" }}></hr> */}
         <section className="hero__select">{children}</section>
       </section>
     </header>

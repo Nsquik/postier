@@ -23,10 +23,29 @@ export interface Meta {
   rateLimit?: { limit: number; remaining: number; reset: number };
 }
 
-export interface UserState {
-  users: User[];
-  selectedUser: User | {};
+export interface CommonData {
   lastMeta: Meta | null;
   isFetching: boolean;
-  error: Error | null;
+  error: Error | null | string;
+}
+
+export interface UserState extends CommonData {
+  users: User[];
+  selectedUser: User | null;
+}
+
+export interface Post {
+  id: number;
+  user_id: number;
+  title: string;
+  body: string;
+  _links: {
+    self: { href: string };
+    edit: { href: string };
+  };
+}
+
+export interface PostState extends CommonData {
+  posts: Post[];
+  firstFetch: boolean;
 }
