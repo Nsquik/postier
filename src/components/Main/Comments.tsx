@@ -4,6 +4,7 @@ import { initializeCommentSection, fetchComments } from "../../actions/commentsA
 import { useTypedSelector } from "../../store/IStore";
 import { SearchSkeleton } from "../misc/SearchSkeleton";
 import "./Comments.scss";
+import AddCommentForm from "./AddCommentForm";
 
 export interface Props {
   postId: number;
@@ -25,7 +26,7 @@ const Comments: React.FC<Props> = React.memo(({ postId }) => {
     if (comments.posts[postId]?.initialized) {
       return comments.posts[postId].comments?.map((comment) => {
         return (
-          <div className="comment">
+          <div className="comment" key={comment.id}>
             <p className="comment__author">
               {comment.name} <span className="comment__email">({comment.email})</span>
             </p>
@@ -53,6 +54,7 @@ const Comments: React.FC<Props> = React.memo(({ postId }) => {
             </div>
           )}
           {renderComments()}
+          <AddCommentForm postId={postId} />
         </section>
       )}
 

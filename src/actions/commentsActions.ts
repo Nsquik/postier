@@ -1,4 +1,10 @@
-import { CommentsTypes, FETCH_COMMENTS_ERROR, FETCH_COMMENTS_REQUEST, FETCH_COMMENTS } from "./commentsActionTypes";
+import {
+  CommentsTypes,
+  FETCH_COMMENTS_ERROR,
+  FETCH_COMMENTS_REQUEST,
+  FETCH_COMMENTS,
+  ADD_COMMENT,
+} from "./commentsActionTypes";
 import { AppThunk } from "../typescript/types";
 import apiClient from "../api/axios";
 
@@ -10,8 +16,6 @@ export const initializeCommentSection = (postId: number) => {
 };
 
 export const fetchComments = (postId: number): AppThunk => async (dispatch, getState) => {
-  console.log("....");
-
   try {
     dispatch<FETCH_COMMENTS_REQUEST>({ type: CommentsTypes.FETCH_COMMENTS_REQUEST, payload: postId });
 
@@ -39,6 +43,28 @@ export const fetchComments = (postId: number): AppThunk => async (dispatch, getS
       type: CommentsTypes.FETCH_COMMENTS_ERROR,
       payload: { error: error.message, postId: postId },
     });
+  }
+};
+
+export const addComment = (
+  postId: number,
+  values: {
+    name: string;
+    email: string;
+    body: string;
+  }
+): AppThunk => async (dispatch) => {
+  try {
+    const body = { ...values, post_id: postId };
+
+    const { data } = await apiClient.post("https://gorest.co.in/public-api/comments", body);
+
+    dispatch<ADD_COMMENT>({
+      type: CommentsTypes.ADD_COMMENT,
+      payload: { result: data.result, postId: postId },
+    });
+  } catch (error) {
+    console.log(error);
   }
 };
 

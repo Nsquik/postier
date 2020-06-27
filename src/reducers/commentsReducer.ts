@@ -16,8 +16,6 @@ export const commentsReducer = (state = initialState, action: CommentsActionType
         },
       };
     case CommentsTypes.FETCH_COMMENTS: // i should've probably used immer for this but it was a good practice = )
-      console.log(action.payload.result);
-
       return {
         ...state,
         posts: {
@@ -52,6 +50,18 @@ export const commentsReducer = (state = initialState, action: CommentsActionType
             ...state.posts[action.payload.postId],
             error: action.payload.error,
             isFetching: false,
+          },
+        },
+      };
+
+    case CommentsTypes.ADD_COMMENT:
+      return {
+        ...state,
+        posts: {
+          ...state.posts,
+          [action.payload.postId]: {
+            ...state.posts[action.payload.postId],
+            comments: [...state.posts[action.payload.postId].comments, action.payload.result],
           },
         },
       };
