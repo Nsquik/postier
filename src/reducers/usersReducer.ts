@@ -26,6 +26,21 @@ export const usersReducer = (state = initialState, action: UserActionTypes): Use
     case UsersTypes.SELECT_USER: {
       return { ...state, selectedUser: action.payload };
     }
+    case UsersTypes.RENAME_USER: {
+      if (state.selectedUser) {
+        return {
+          ...state,
+          selectedUser: action.payload,
+          users: state.users.map((user) =>
+            user.id === action.payload.id
+              ? { ...user, first_name: action.payload.first_name, last_name: action.payload.last_name }
+              : user
+          ),
+        };
+      } else {
+        return state;
+      }
+    }
     default:
       return state;
   }

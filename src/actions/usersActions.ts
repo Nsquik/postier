@@ -1,7 +1,9 @@
 import { AppThunk } from "../typescript/types";
-import { FETCH_USERS, UsersTypes, FETCH_USERS_FAILURE, FETCH_USERS_REQUEST } from "./usersActionTypes";
+import { FETCH_USERS, UsersTypes, FETCH_USERS_FAILURE, FETCH_USERS_REQUEST, SELECT_USER } from "./usersActionTypes";
 import { apiClient } from "../api/axios";
 import { User } from "../typescript/interfaces";
+import { USER_SWITCHED, PostsTypes } from "./postsActionTypes";
+import { USER_SWITCHED as USER_SWITCHED_COMM, CommentsTypes } from "./commentsActionTypes";
 
 export const fetchUsers = (): AppThunk => async (dispatch, getState) => {
   try {
@@ -20,9 +22,32 @@ export const fetchUsers = (): AppThunk => async (dispatch, getState) => {
   }
 };
 
-export const selectUser = (user: User) => {
-  return {
+export const selectUser = (user: User): AppThunk => (dispatch, getState) => {
+  dispatch<USER_SWITCHED>({ type: PostsTypes.USER_SWITCHED, payload: null });
+  dispatch<USER_SWITCHED_COMM>({ type: CommentsTypes.USER_SWITCHED, payload: null });
+
+  dispatch<SELECT_USER>({
     type: UsersTypes.SELECT_USER,
     payload: user,
-  };
+  });
+};
+
+export const renameUser = (values: { firstName: string; lastName: string }): AppThunk => async (dispatch, getState) => {
+  try {
+    const body: { first_name?: string; last_name?: string } = {};
+
+    const userId = getState().users.selectedUser?.id;
+
+    if (values.firstName !== "") {
+      body.first_name = values.firstName;
+    }
+    if (values.lastName !== "") {
+      body.last_name = values.lastName;
+    }
+    const res = await apiClient.patch(`https://gorest.co.in/public-api/users/${userId}`, body);
+
+    dispatch({ type: UsersTypes.RENAME_USER, payload: res.data.result });
+  } catch (error) {
+    console.log(error);
+  }
 };

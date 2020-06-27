@@ -1,0 +1,25 @@
+.rename__form {
+  display: flex;
+  margin-bottom: 10rem;
+  justify-content: space-evenly;
+  align-items: flex-end;
+  align-content: flex-end;
+}
+.form__input {
+  &-firstName {
+    margin: 0 1rem 0 0;
+    background: white;
+  }
+  &-lastName {
+    margin: 0 1rem 0 0;
+    background: white;
+  }
+}
+
+.input__container {
+}
+
+.form__submit {
+  height: 5rem;
+  align-self: flex-end;
+}
