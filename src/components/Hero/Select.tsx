@@ -16,9 +16,6 @@ import "antd/lib/select/style/css";
 const { Option } = Select;
 
 export interface Props {}
-// interface StaticComponents {
-//   Item: React.FC<any>;
-// }
 
 const SelectContainer: React.FC<Props> = () => {
   const [data, setData] = useState<User[]>([]);
@@ -40,13 +37,9 @@ const SelectContainer: React.FC<Props> = () => {
   };
 
   const onSelect = (value: string | number | LabeledValue, option: any) => {
-    // console.log(value);
-    // console.log(option);
     const res = data.find((user) => user.id === value);
 
     res && dispatch(selectUser(res));
-
-    // dispatch(selectUser)
   };
 
   return (

@@ -1,7 +1,7 @@
 import { UserState } from "../typescript/interfaces";
 import { UserActionTypes, UsersTypes } from "../actions/usersActionTypes";
 
-const initialState: UserState = {
+export const initialState: UserState = {
   users: [],
   selectedUser: null,
   error: null,

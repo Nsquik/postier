@@ -4,7 +4,7 @@ import "./PostSkeleton.scss";
 
 export const PostSkeleton = () => {
   return (
-    <div className="post__skeleton">
+    <div className="post__skeleton" id="post__skeleton">
       <Skeleton active />
     </div>
   );

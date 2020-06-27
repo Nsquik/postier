@@ -37,7 +37,11 @@ const RenameUser: React.FC<Props> = () => {
           ) : null}
           First name:
         </label>
-        <input className="form__input form__input-firstName" {...formik.getFieldProps("firstName")} />
+        <input
+          className="form__input form__input-firstName"
+          {...formik.getFieldProps("firstName")}
+          data-testid="rename-firstname"
+        />
       </div>
 
       <div className="input__container">
@@ -47,10 +51,14 @@ const RenameUser: React.FC<Props> = () => {
           ) : null}
           Last name:
         </label>
-        <input className="form__input form__input-lastName" {...formik.getFieldProps("lastName")}></input>
+        <input
+          className="form__input form__input-lastName"
+          {...formik.getFieldProps("lastName")}
+          data-testid="rename-lastname"
+        ></input>
       </div>
 
-      <button className="form__submit" type="submit">
+      <button className="form__submit" type="submit" data-testid="rename-button">
         Change
       </button>
     </form>

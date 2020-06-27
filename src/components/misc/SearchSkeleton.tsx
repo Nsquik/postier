@@ -5,7 +5,7 @@ import "./SkeletonSearch.scss";
 
 export const SearchSkeleton = () => {
   return (
-    <div className="skeleton__container-search">
+    <div className="skeleton__container-search" id="search__skeleton">
       <SkeletonAvatar active shape="square" size="large" />
       <div className="skeleton__info-search">
         <SkeletonInput

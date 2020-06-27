@@ -43,7 +43,11 @@ const AddCommentForm: React.FC<Props> = (props) => {
           <label className="input__label" htmlFor="name">
             Your name:
           </label>
-          <input className="form__input form__input-name" {...formik.getFieldProps("name")} />
+          <input
+            className="form__input form__input-name"
+            {...formik.getFieldProps("name")}
+            data-testid="comment-name"
+          />
           {formik.touched.name && formik.errors.name ? (
             <div style={{ color: "#9c0000" }}>{formik.errors.name}</div>
           ) : null}
@@ -53,7 +57,11 @@ const AddCommentForm: React.FC<Props> = (props) => {
           <label className="input__label" htmlFor="email">
             Email:
           </label>
-          <input className="form__input form__input-email" {...formik.getFieldProps("email")}></input>
+          <input
+            className="form__input form__input-email"
+            {...formik.getFieldProps("email")}
+            data-testid="comment-email"
+          ></input>
           {formik.touched.email && formik.errors.email ? (
             <div style={{ color: "#9c0000" }}>{formik.errors.email}</div>
           ) : null}
@@ -62,13 +70,17 @@ const AddCommentForm: React.FC<Props> = (props) => {
 
       <div className="form__comment">
         <label htmlFor="body">Comment:</label>
-        <TextArea className="form__input form__input-body" {...formik.getFieldProps("body")}></TextArea>
+        <TextArea
+          className="form__input form__input-body"
+          {...formik.getFieldProps("body")}
+          data-testid="comment-body"
+        ></TextArea>
         {formik.touched.body && formik.errors.body ? (
           <div style={{ color: "#9c0000" }}>{formik.errors.body}</div>
         ) : null}
       </div>
 
-      <button className="form__submit" type="submit">
+      <button className="form__submit" type="submit" data-testid="comment-button">
         Send comment
       </button>
     </form>
