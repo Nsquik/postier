@@ -22,11 +22,11 @@ const AddCommentForm: React.FC<Props> = (props) => {
     validationSchema: Yup.object({
       name: Yup.string()
         .max(30, "Must be 30 characters or less")
-        .matches(/^[a-zA-Z]+$/, "Only english letters!")
+        .matches(/^[a-zA-Z\d\s]+$/, "Only english letters!")
         .required("Required"),
       body: Yup.string()
         .max(200, "Must be 200 characters or less")
-        .matches(/^[a-zA-Z]+$/, "Only english letters!")
+        .matches(/^[a-zA-Z\d\s]+$/, "Only english letters!")
         .required("Required"),
       email: Yup.string().email("Invalid email address").required("Required"),
     }),
