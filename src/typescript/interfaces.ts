@@ -64,6 +64,12 @@ export interface PostState extends CommonData {
 
 export interface CommentState {
   posts: {
-    [postId: number]: { comments?: Comment[]; isFetching?: boolean; lastMeta?: Meta; error: Error | null | string };
+    [postId: number]: {
+      comments?: Comment[];
+      isFetching?: boolean;
+      lastMeta?: Meta | null;
+      error: Error | null | string;
+      initialized: boolean;
+    };
   };
 }

@@ -38,6 +38,26 @@
   }
 }
 
+.show__comments {
+  background: $main-color;
+  padding: 1rem;
+  color: white;
+  display: flex;
+  justify-content: center;
+  font-size: 1.8rem;
+  border-radius: 0.5rem 0.5rem;
+  transition: all 0.2s;
+  border: none;
+
+  &:hover {
+    background-color: $sub-color;
+  }
+
+  &:active {
+    transform: translateY(1rem);
+  }
+}
+
 .post {
   &__body {
     padding: 1rem;

@@ -5,6 +5,7 @@ import { useDispatch } from "react-redux";
 import "./PostsList.scss";
 import { fetchPosts } from "../../actions/postsActions";
 import { PostSkeleton } from "../misc/PostSkeleton";
+import Comments from "./Comments";
 
 export interface Props {}
 
@@ -14,6 +15,7 @@ const PostsList: React.FC<Props> = () => {
   const [data, setData] = useState<Post[]>([]);
   const dispatch = useDispatch();
   const isMoreThanOnePost = posts.posts.length > 1 ? true : false;
+  const [openComments, setOpenComments] = useState(false);
 
   const { selectedUser } = useTypedSelector((state) => state.users);
 
@@ -60,16 +62,20 @@ const PostsList: React.FC<Props> = () => {
               <div className="post__header-wrapperuser">
                 <label htmlFor="">{`${selectedUser?.first_name} ${selectedUser?.last_name}`}</label>
                 <img className="post__img" src={selectedUser?._links?.avatar.href} alt="" />
-                {/* <div className="post__user">{`${selectedUser?.first_name} ${selectedUser?.last_name}`}</div> */}
               </div>
               <div className="post__header-wrappertitle">
                 <div className="post__title">{post.title}</div>
               </div>
             </header>
             <main className="post__body">{post.body}</main>
+            {openComments && <Comments postId={post.id} />}
+            <button className="show__comments" onClick={() => setOpenComments((state) => !state)}>
+              {openComments ? "Hide comments" : "Show comments"}
+            </button>
           </article>
         );
       })}
+
       {posts.isFetching ? <PostSkeleton /> : null}
       {!state && (
         <button disabled={!isMoreThanOnePost} className="posts__button" onClick={() => setState(true)}>

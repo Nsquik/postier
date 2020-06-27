@@ -12,9 +12,52 @@ export const commentsReducer = (state = initialState, action: CommentsActionType
         ...state,
         posts: {
           ...state.posts,
-          [action.payload]: { comments: [], isFetching: false, error: null, lastMeta: undefined },
+          [action.payload]: { comments: [], isFetching: false, error: null, lastMeta: null, initialized: true },
         },
       };
+    case CommentsTypes.FETCH_COMMENTS: // i should've probably used immer for this but it was a good practice = )
+      console.log(action.payload.result);
+
+      return {
+        ...state,
+        posts: {
+          ...state.posts,
+          [action.payload.postId]: {
+            ...state.posts[action.payload.postId],
+            comments: [...state.posts[action.payload.postId].comments, ...action.payload.result],
+            isFetching: false,
+            lastMeta: action.payload._meta,
+          },
+        },
+      };
+
+    case CommentsTypes.FETCH_COMMENTS_REQUEST:
+      return {
+        ...state,
+        posts: {
+          ...state.posts,
+          [action.payload]: {
+            ...state.posts[action.payload],
+            isFetching: true,
+          },
+        },
+      };
+
+    case CommentsTypes.FETCH_COMMENTS_ERROR:
+      return {
+        ...state,
+        posts: {
+          ...state.posts,
+          [action.payload.postId]: {
+            ...state.posts[action.payload.postId],
+            error: action.payload.error,
+            isFetching: false,
+          },
+        },
+      };
+
+    case CommentsTypes.USER_SWITCHED:
+      return { posts: {} };
 
     default:
       return state;

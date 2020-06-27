@@ -6,6 +6,7 @@ import { useTypedSelector } from "../../store/IStore";
 import PostsList from "./PostsList";
 import { fetchFirstPosts, userSwitched } from "../../actions/postsActions";
 import { PostSkeleton } from "../misc/PostSkeleton";
+import { userSwitchedResetComments } from "../../actions/commentsActions";
 export interface Props {}
 
 const Main: React.FC<Props> = () => {
@@ -15,6 +16,7 @@ const Main: React.FC<Props> = () => {
 
   useEffect(() => {
     dispatch(userSwitched());
+    dispatch(userSwitchedResetComments());
   }, [users.selectedUser, dispatch]);
 
   useEffect(() => {
