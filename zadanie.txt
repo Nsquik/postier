@@ -12,8 +12,10 @@ Po wybraniu konkretnego użytkownika wyświetlamy:
 
 
 3. Po wyświetleniu komentarzy możliwość dodania nowego komentarza
------------------------------- DONE ---------------------------------
 
 
 4. Dwa pola input pozwalające zmienić imię i nazwisko wybranego użytkownika
+
+------------------------------ DONE ---------------------------------
+ Zrobione wszystko D:
 

@@ -17,10 +17,11 @@ const PostsList: React.FC<Props> = () => {
   const isMoreThanOnePost = posts.posts.length > 1 ? true : false;
 
   const { selectedUser } = useTypedSelector((state) => state.users);
+  const selectedUserId = users.selectedUser?.id;
 
   useEffect(() => {
     setState(false);
-  }, [users.selectedUser]);
+  }, [selectedUserId]);
 
   useEffect(() => {
     state ? setData(posts.posts) : setData([posts.posts[0]]);

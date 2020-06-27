@@ -92,7 +92,7 @@ const SelectContainer: React.FC<Props> = () => {
                 className="select__option-img"
                 src={user?._links?.avatar?.href ? user._links.avatar.href : imgPlaceholder}
                 onError={(e) => (e.currentTarget.src = imgPlaceholder)}
-                alt="User profile"
+                alt=""
               ></img>
             </div>
           </Option>
