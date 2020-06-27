@@ -6,6 +6,8 @@ import { useTypedSelector } from "../../store/IStore";
 import PostsList from "./PostsList";
 import { fetchFirstPosts, userSwitched } from "../../actions/postsActions";
 import { PostSkeleton } from "../misc/PostSkeleton";
+import { userSwitchedResetComments } from "../../actions/commentsActions";
+import { scroller, Element } from "react-scroll";
 export interface Props {}
 
 const Main: React.FC<Props> = () => {
@@ -15,16 +17,27 @@ const Main: React.FC<Props> = () => {
 
   useEffect(() => {
     dispatch(userSwitched());
+    dispatch(userSwitchedResetComments());
   }, [users.selectedUser, dispatch]);
 
   useEffect(() => {
+    scroller.scrollTo("scroll-to", {
+      duration: 1000,
+      delay: 0,
+      smooth: "easeInOutCubic",
+    });
     dispatch(fetchFirstPosts());
   }, [users.selectedUser, dispatch]);
 
   return (
     <main className="main">
       <Wave />
-      <section className="posts__list">{posts.firstFetch ? <PostsList /> : <PostSkeleton />}</section>
+
+      <Element name="scroll-to">
+        <section id="main" className="posts__list">
+          {posts.firstFetch ? <PostsList /> : <PostSkeleton />}
+        </section>
+      </Element>
     </main>
   );
 };

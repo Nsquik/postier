@@ -45,7 +45,31 @@ export interface Post {
   };
 }
 
+export interface Comment {
+  id: number;
+  post_id: number;
+  name: string;
+  email: string;
+  body: string;
+  _links: {
+    self: { href: string };
+    edit: { href: string };
+  };
+}
+
 export interface PostState extends CommonData {
   posts: Post[];
   firstFetch: boolean;
+}
+
+export interface CommentState {
+  posts: {
+    [postId: number]: {
+      comments?: Comment[];
+      isFetching?: boolean;
+      lastMeta?: Meta | null;
+      error: Error | null | string;
+      initialized: boolean;
+    };
+  };
 }

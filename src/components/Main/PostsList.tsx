@@ -1,10 +1,11 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { useTypedSelector } from "../../store/IStore";
 import { Post } from "../../typescript/interfaces";
 import { useDispatch } from "react-redux";
 import "./PostsList.scss";
 import { fetchPosts } from "../../actions/postsActions";
 import { PostSkeleton } from "../misc/PostSkeleton";
+import Comments from "./Comments";
 
 export interface Props {}
 
@@ -25,30 +26,32 @@ const PostsList: React.FC<Props> = () => {
     state ? setData(posts.posts) : setData([posts.posts[0]]);
   }, [state, posts.posts]);
 
-  useEffect(() => {
-    window.addEventListener("scroll", () => {
-      if (state && !posts.error) {
-        const windowHeight = "innerHeight" in window ? window.innerHeight : document.documentElement.offsetHeight;
-        const body = document.body;
-        const html = document.documentElement;
-        const docHeight = Math.max(
-          body.scrollHeight,
-          body.offsetHeight,
-          html.clientHeight,
-          html.scrollHeight,
-          html.offsetHeight
-        );
-        const windowBottom = windowHeight + window.pageYOffset;
-        if (windowBottom >= docHeight) {
-          dispatch(fetchPosts());
-        }
+  const onScroll = useCallback(() => {
+    if (state && !posts.error) {
+      const windowHeight = "innerHeight" in window ? window.innerHeight : document.documentElement.offsetHeight;
+      const body = document.body;
+      const html = document.documentElement;
+      const docHeight = Math.max(
+        body.scrollHeight,
+        body.offsetHeight,
+        html.clientHeight,
+        html.scrollHeight,
+        html.offsetHeight
+      );
+      const windowBottom = windowHeight + window.pageYOffset;
+      if (windowBottom >= docHeight) {
+        dispatch(fetchPosts());
       }
-    });
+    }
+  }, [dispatch, posts.error, state]);
+
+  useEffect(() => {
+    window.addEventListener("scroll", onScroll);
 
     return () => {
-      window.removeEventListener("scroll", () => {});
+      window.removeEventListener("scroll", onScroll);
     };
-  }, [dispatch, state, posts.error]);
+  }, [onScroll]);
 
   return (
     <>
@@ -60,16 +63,17 @@ const PostsList: React.FC<Props> = () => {
               <div className="post__header-wrapperuser">
                 <label htmlFor="">{`${selectedUser?.first_name} ${selectedUser?.last_name}`}</label>
                 <img className="post__img" src={selectedUser?._links?.avatar.href} alt="" />
-                {/* <div className="post__user">{`${selectedUser?.first_name} ${selectedUser?.last_name}`}</div> */}
               </div>
               <div className="post__header-wrappertitle">
                 <div className="post__title">{post.title}</div>
               </div>
             </header>
             <main className="post__body">{post.body}</main>
+            <Comments postId={post.id} />
           </article>
         );
       })}
+
       {posts.isFetching ? <PostSkeleton /> : null}
       {!state && (
         <button disabled={!isMoreThanOnePost} className="posts__button" onClick={() => setState(true)}>

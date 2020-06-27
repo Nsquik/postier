@@ -38,9 +38,39 @@
   }
 }
 
+.show__comments {
+  background: $main-color;
+  padding: 1rem;
+  color: white;
+  display: flex;
+  justify-content: center;
+  font-size: 1.8rem;
+  border-radius: 0.5rem 0.5rem;
+  transition: all 0.2s;
+  border: none;
+
+  &:hover {
+    background-color: $sub-color;
+    cursor: pointer;
+  }
+
+  &:active {
+    transform: translateY(1rem);
+  }
+}
+
 .post {
   &__body {
     padding: 1rem;
+  }
+  &__user {
+    width: max-content;
+    height: 2rem;
+    align-self: flex-start;
+    font-size: 1.2rem;
+    font-weight: 300;
+    top: -1.7rem;
+    left: -1rem;
   }
 
   &__header {
@@ -52,16 +82,6 @@
     padding: 2rem;
     color: white;
     border-radius: 1rem 1rem 0 0;
-
-    label {
-      height: 2rem;
-      width: 10rem;
-      align-self: flex-start;
-      font-size: 1.2rem;
-      font-weight: 300;
-      top: -1.7rem;
-      left: -1rem;
-    }
 
     &-wrapperuser {
       position: relative;
