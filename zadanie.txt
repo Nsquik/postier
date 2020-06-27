@@ -10,10 +10,10 @@ Po wybraniu konkretnego użytkownika wyświetlamy:
 
 2. Każdy post powinien mieć możliwość zobaczenia jego komentarzy
 
------------------------------- DONE ---------------------------------
-
 
 3. Po wyświetleniu komentarzy możliwość dodania nowego komentarza
+------------------------------ DONE ---------------------------------
+
 
 4. Dwa pola input pozwalające zmienić imię i nazwisko wybranego użytkownika
 
