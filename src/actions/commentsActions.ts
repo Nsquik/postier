@@ -10,12 +10,17 @@ export const initializeCommentSection = (postId: number) => {
 };
 
 export const fetchComments = (postId: number): AppThunk => async (dispatch, getState) => {
+  console.log("....");
+
   try {
     dispatch<FETCH_COMMENTS_REQUEST>({ type: CommentsTypes.FETCH_COMMENTS_REQUEST, payload: postId });
 
     const currPage = getState().comments.posts[postId].lastMeta?.currentPage;
 
-    if (currPage !== undefined && currPage === getState().comments.posts[postId].lastMeta?.pageCount) {
+    if (
+      (currPage !== undefined && currPage === getState().comments.posts[postId].lastMeta?.pageCount) ||
+      getState().comments.posts[postId].lastMeta?.pageCount === 0
+    ) {
       throw new Error("No more comments to fetch");
     }
 

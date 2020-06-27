@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { useTypedSelector } from "../../store/IStore";
 import { Post } from "../../typescript/interfaces";
 import { useDispatch } from "react-redux";
@@ -26,30 +26,32 @@ const PostsList: React.FC<Props> = () => {
     state ? setData(posts.posts) : setData([posts.posts[0]]);
   }, [state, posts.posts]);
 
-  useEffect(() => {
-    window.addEventListener("scroll", () => {
-      if (state && !posts.error) {
-        const windowHeight = "innerHeight" in window ? window.innerHeight : document.documentElement.offsetHeight;
-        const body = document.body;
-        const html = document.documentElement;
-        const docHeight = Math.max(
-          body.scrollHeight,
-          body.offsetHeight,
-          html.clientHeight,
-          html.scrollHeight,
-          html.offsetHeight
-        );
-        const windowBottom = windowHeight + window.pageYOffset;
-        if (windowBottom >= docHeight) {
-          dispatch(fetchPosts());
-        }
+  const onScroll = useCallback(() => {
+    if (state && !posts.error) {
+      const windowHeight = "innerHeight" in window ? window.innerHeight : document.documentElement.offsetHeight;
+      const body = document.body;
+      const html = document.documentElement;
+      const docHeight = Math.max(
+        body.scrollHeight,
+        body.offsetHeight,
+        html.clientHeight,
+        html.scrollHeight,
+        html.offsetHeight
+      );
+      const windowBottom = windowHeight + window.pageYOffset;
+      if (windowBottom >= docHeight) {
+        dispatch(fetchPosts());
       }
-    });
+    }
+  }, [dispatch, posts.error, state]);
+
+  useEffect(() => {
+    window.addEventListener("scroll", onScroll);
 
     return () => {
-      window.removeEventListener("scroll", () => {});
+      window.removeEventListener("scroll", onScroll);
     };
-  }, [dispatch, state, posts.error]);
+  }, [onScroll]);
 
   return (
     <>
