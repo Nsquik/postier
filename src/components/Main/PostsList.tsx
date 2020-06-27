@@ -15,7 +15,6 @@ const PostsList: React.FC<Props> = () => {
   const [data, setData] = useState<Post[]>([]);
   const dispatch = useDispatch();
   const isMoreThanOnePost = posts.posts.length > 1 ? true : false;
-  const [openComments, setOpenComments] = useState(false);
 
   const { selectedUser } = useTypedSelector((state) => state.users);
 
@@ -68,10 +67,7 @@ const PostsList: React.FC<Props> = () => {
               </div>
             </header>
             <main className="post__body">{post.body}</main>
-            {openComments && <Comments postId={post.id} />}
-            <button className="show__comments" onClick={() => setOpenComments((state) => !state)}>
-              {openComments ? "Hide comments" : "Show comments"}
-            </button>
+            <Comments postId={post.id} />
           </article>
         );
       })}
