@@ -35,9 +35,9 @@ const Comments: React.FC<Props> = React.memo(({ postId }) => {
             </div>
           );
         })
-      ) : (
+      ) : !comments.posts[postId]?.isFetching ? (
         <p style={{ margin: "0 auto", padding: "2rem" }}>No comments yet</p>
-      );
+      ) : null;
     }
   };
 
