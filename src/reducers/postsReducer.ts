@@ -27,12 +27,10 @@ export const postsReducer = (state = initialState, action: PostsActionTypes): Po
       };
 
     case PostsTypes.USER_SWITCHED:
-      return { ...state, lastMeta: action.payload, posts: [], firstFetch: false };
+      return { ...state, lastMeta: action.payload, posts: [], firstFetch: false, error: null };
     case PostsTypes.FETCH_POSTS_REQUEST:
       return { ...state, isFetching: true };
     case PostsTypes.FETCH_POSTS_ERROR:
-      console.log(action.payload);
-
       return { ...state, error: action.payload, isFetching: false };
 
     default:
