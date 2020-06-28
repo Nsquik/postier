@@ -24,16 +24,20 @@ const Comments: React.FC<Props> = React.memo(({ postId }) => {
 
   const renderComments = () => {
     if (comments.posts[postId]?.initialized) {
-      return comments.posts[postId].comments?.map((comment) => {
-        return (
-          <div className="comment" key={comment.id}>
-            <p className="comment__author">
-              {comment.name} <span className="comment__email">({comment.email})</span>
-            </p>
-            {comment.body}
-          </div>
-        );
-      });
+      return comments.posts[postId].comments?.length ? (
+        comments.posts[postId].comments?.map((comment) => {
+          return (
+            <div className="comment" key={comment.id}>
+              <p className="comment__author">
+                {comment.name} <span className="comment__email">({comment.email})</span>
+              </p>
+              {comment.body}
+            </div>
+          );
+        })
+      ) : (
+        <p style={{ margin: "0 auto", padding: "2rem" }}>No comments yet</p>
+      );
     }
   };
 
