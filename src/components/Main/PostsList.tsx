@@ -10,25 +10,28 @@ import Comments from "./Comments";
 export interface Props {}
 
 const PostsList: React.FC<Props> = () => {
-  const [state, setState] = useState(false);
-  const { posts, users } = useTypedSelector((state) => state);
-  const [data, setData] = useState<Post[]>([]);
+  const [clicked, setClicked] = useState(false);
+  const {
+    posts: { posts, error, isFetching },
+    users,
+  } = useTypedSelector((state) => state);
+  const [data, setData] = useState<Post[] | null>([]);
   const dispatch = useDispatch();
-  const isMoreThanOnePost = posts.posts.length > 1 ? true : false;
+  const isMoreThanOnePost = posts.length > 1 ? true : false;
 
   const { selectedUser } = useTypedSelector((state) => state.users);
   const selectedUserId = users.selectedUser?.id;
 
   useEffect(() => {
-    setState(false);
+    setClicked(false);
   }, [selectedUserId]);
 
   useEffect(() => {
-    state ? setData(posts.posts) : setData([posts.posts[0]]);
-  }, [state, posts.posts]);
+    clicked ? setData(posts) : setData(posts.slice(0, 1));
+  }, [clicked, posts]);
 
   const onScroll = useCallback(() => {
-    if (state && !posts.error) {
+    if (clicked && !error) {
       const windowHeight = "innerHeight" in window ? window.innerHeight : document.documentElement.offsetHeight;
       const body = document.body;
       const html = document.documentElement;
@@ -44,7 +47,7 @@ const PostsList: React.FC<Props> = () => {
         dispatch(fetchPosts());
       }
     }
-  }, [dispatch, posts.error, state]);
+  }, [dispatch, error, clicked]);
 
   useEffect(() => {
     window.addEventListener("scroll", onScroll);
@@ -56,32 +59,33 @@ const PostsList: React.FC<Props> = () => {
 
   return (
     <>
-      {state && <p> Scroll to fetch more posts! </p>}
-      {data.map((post) => {
-        return (
-          <article key={post.id} className="posts__post">
-            <header className="post__header">
-              <div className="post__header-wrapperuser">
-                <label htmlFor="">{`${selectedUser?.first_name} ${selectedUser?.last_name}`}</label>
-                <img className="post__img" src={selectedUser?._links?.avatar.href} alt="" />
-              </div>
-              <div className="post__header-wrappertitle">
-                <div className="post__title">{post.title}</div>
-              </div>
-            </header>
-            <main className="post__body">{post.body}</main>
-            <Comments postId={post.id} />
-          </article>
-        );
-      })}
+      {clicked && <p> Scroll to fetch more posts! </p>}
+      {data &&
+        data.map((post) => {
+          return (
+            <article key={post.id} className="posts__post">
+              <header className="post__header">
+                <div className="post__header-wrapperuser">
+                  <label htmlFor="">{`${selectedUser?.first_name} ${selectedUser?.last_name}`}</label>
+                  <img className="post__img" src={selectedUser?._links?.avatar.href} alt="" />
+                </div>
+                <div className="post__header-wrappertitle">
+                  <div className="post__title">{post.title}</div>
+                </div>
+              </header>
+              <main className="post__body">{post.body}</main>
+              <Comments postId={post.id} />
+            </article>
+          );
+        })}
 
-      {posts.isFetching ? <PostSkeleton /> : null}
-      {!state && (
-        <button disabled={!isMoreThanOnePost} className="posts__button" onClick={() => setState(true)}>
+      {isFetching ? <PostSkeleton /> : null}
+      {!clicked && (
+        <button disabled={!isMoreThanOnePost} className="posts__button" onClick={() => setClicked(true)}>
           {isMoreThanOnePost ? "Show more posts" : "No more posts :("}
         </button>
       )}
-      {posts.error && <p>{posts.error}</p>}
+      {error && <p>{error}</p>}
     </>
   );
 };

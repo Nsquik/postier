@@ -33,6 +33,7 @@ export const fetchFirstPosts = (): AppThunk => async (dispatch, getState) => {
 
     if (selectedUser) {
       const { data } = await apiClient.get(`https://gorest.co.in/public-api/posts?page=1&user_id=${selectedUser.id}`);
+
       dispatch<FETCH_FIRST_POSTS>({
         type: PostsTypes.FETCH_FIRST_POSTS,
         payload: { _meta: data._meta, result: data.result },
