@@ -63,33 +63,36 @@ const SelectContainer: React.FC<Props> = () => {
           ) : data.length === 0 ? (
             "User not found..."
           ) : (
-            <SearchSkeleton />
+            // <SearchSkeleton />
+            "XD"
           )
         }
         filterOption={true}
-        optionFilterProp={"lastname"}
+        optionFilterProp={"name"}
         onPopupScroll={(e) => {
           // Fetch on scroll useOnScrollFetch hook
           inputValue === "" &&
             onScroll(e.currentTarget.scrollTop, e.currentTarget.clientHeight, e.currentTarget.scrollHeight); // values to calculate if end of scroll
         }}
       >
-        {data.map((user) => (
-          <Option value={user.id} key={user.id} lastname={user.last_name}>
-            <div className="select__option" key={user.id}>
-              <div className="select__option-info">
-                <div className="select__option-name">{`${user.first_name} ${user.last_name}`}</div>
-                <div className="select__option-email">{user.email}</div>
+        {data.map((user) => {
+          return (
+            <Option value={user.id} key={user.id} name={user.name}>
+              <div className="select__option" key={user.id}>
+                <div className="select__option-info">
+                  <div className="select__option-name">{`${user.name}`}</div>
+                  <div className="select__option-email">{user.email}</div>
+                </div>
+                <img
+                  className="select__option-img"
+                  src={user?._links?.avatar?.href ? user._links.avatar.href : imgPlaceholder}
+                  onError={(e) => (e.currentTarget.src = imgPlaceholder)}
+                  alt=""
+                ></img>
               </div>
-              <img
-                className="select__option-img"
-                src={user?._links?.avatar?.href ? user._links.avatar.href : imgPlaceholder}
-                onError={(e) => (e.currentTarget.src = imgPlaceholder)}
-                alt=""
-              ></img>
-            </div>
-          </Option>
-        ))}
+            </Option>
+          );
+        })}
         <Select.OptGroup label={isFetching ? "...Loading" : null}></Select.OptGroup>
       </Select>
     </>

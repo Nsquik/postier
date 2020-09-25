@@ -36,7 +36,7 @@ export const fetchComments = (postId: number): AppThunk => async (dispatch, getS
 
     dispatch<FETCH_COMMENTS>({
       type: CommentsTypes.FETCH_COMMENTS,
-      payload: { _meta: data._meta, result: data.result, postId: postId },
+      payload: { _meta: data.meta, result: data.data, postId: postId },
     });
   } catch (error) {
     dispatch<FETCH_COMMENTS_ERROR>({
@@ -61,7 +61,7 @@ export const addComment = (
 
     dispatch<ADD_COMMENT>({
       type: CommentsTypes.ADD_COMMENT,
-      payload: { result: data.result, postId: postId },
+      payload: { result: data.data, postId: postId },
     });
   } catch (error) {
     console.log(error);

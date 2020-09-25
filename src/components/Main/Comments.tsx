@@ -26,6 +26,7 @@ const Comments: React.FC<Props> = React.memo(({ postId }) => {
     if (comments.posts[postId]?.initialized) {
       return comments.posts[postId].comments?.length ? (
         comments.posts[postId].comments?.map((comment) => {
+          console.log(comment);
           return (
             <div className="comment" key={comment.id}>
               <p className="comment__author">

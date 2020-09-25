@@ -1,7 +1,6 @@
 export interface User {
   id: string;
-  first_name: string;
-  last_name: string;
+  name?: string;
   gender: string;
   dob: string;
   email: string;
@@ -13,13 +12,20 @@ export interface User {
 }
 
 export interface Meta {
-  success: boolean;
-  code: number;
-  message: string;
-  totalCount: number;
-  pageCount: number;
-  currentPage: number;
-  perPage: number;
+  pagination: {
+    total: number;
+    pages: number;
+    page: number;
+    limit: number;
+  };
+  firstFetch: boolean;
+  success?: boolean;
+  code?: number;
+  message?: string;
+  totalCount?: number;
+  pageCount?: number;
+  currentPage?: number;
+  perPage?: number;
   rateLimit?: { limit: number; remaining: number; reset: number };
 }
 

@@ -26,13 +26,13 @@ const useOnSearchFetch = () => {
 
     if (value !== "") {
       apiClient
-        .get(`/public-api/users?last_name=${value}`)
+        .get(`/public-api/users?name=${value}`)
         .then((value) => {
           setIsSearchFetching(false);
           return value.data;
         })
         .then((data) => {
-          setValues([...data.result]);
+          setValues([...data.data]);
         })
         .catch((error) => {
           setIsSearchFetching(false);

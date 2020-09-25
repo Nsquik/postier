@@ -6,6 +6,7 @@ import "./PostsList.scss";
 import { fetchPosts } from "../../actions/postsActions";
 import { PostSkeleton } from "../misc/PostSkeleton";
 import Comments from "./Comments";
+import imgPlaceholder from "../../media/placeholder.jpg";
 
 export interface Props {}
 
@@ -66,8 +67,8 @@ const PostsList: React.FC<Props> = () => {
             <article key={post.id} className="posts__post">
               <header className="post__header">
                 <div className="post__header-wrapperuser">
-                  <label htmlFor="">{`${selectedUser?.first_name} ${selectedUser?.last_name}`}</label>
-                  <img className="post__img" src={selectedUser?._links?.avatar.href} alt="" />
+                  <label htmlFor="">{`${selectedUser?.name}`}</label>
+                  <img className="post__img" src={imgPlaceholder} alt="" />
                 </div>
                 <div className="post__header-wrappertitle">
                   <div className="post__title">{post.title}</div>

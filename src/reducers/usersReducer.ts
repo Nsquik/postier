@@ -12,6 +12,7 @@ export const initialState: UserState = {
 export const usersReducer = (state = initialState, action: UserActionTypes): UserState => {
   switch (action.type) {
     case UsersTypes.FETCH_USERS:
+      console.log(action.payload);
       return {
         ...state,
         users: [...state.users, ...action.payload.users],
@@ -32,9 +33,7 @@ export const usersReducer = (state = initialState, action: UserActionTypes): Use
           ...state,
           selectedUser: action.payload,
           users: state.users.map((user) =>
-            user.id === action.payload.id
-              ? { ...user, first_name: action.payload.first_name, last_name: action.payload.last_name }
-              : user
+            user.id === action.payload.id ? { ...user, name: action.payload.name } : user
           ),
         };
       } else {
