@@ -12,7 +12,6 @@ export const initialState: UserState = {
 export const usersReducer = (state = initialState, action: UserActionTypes): UserState => {
   switch (action.type) {
     case UsersTypes.FETCH_USERS:
-      console.log(action.payload);
       return {
         ...state,
         users: [...state.users, ...action.payload.users],
