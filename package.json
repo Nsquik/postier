@@ -15,7 +15,7 @@
     "@types/react-scroll": "^1.5.5",
     "@types/yup": "^0.29.3",
     "antd": "^4.3.5",
-    "axios": "^0.19.2",
+    "axios": "^0.21.1",
     "formik": "^2.1.4",
     "lodash": "^4.17.15",
     "react": "^16.13.1",
